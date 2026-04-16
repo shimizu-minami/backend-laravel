@@ -1,0 +1,40 @@
+name: Deploy Laravel to Lolipop
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 1. 依存関係のインストール（デプロイ用）
+      - name: Install dependencies
+        run: |
+          composer install --no-dev --optimize-autoloader
+
+      # 2. ファイルの転送 (rsyncを使用)
+      - name: Deploy to Server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          source: "."
+          target: "/home/users/0/main.jp-shimizu-minami/web/tools/backend" # ロリポップ上のパス
+
+      # 3. リモートで migration を実行
+      - name: Execute Remote Commands
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            cd /home/users/0/main.jp-shimizu-minami/web/tools/backend
+            php artisan migrate --force
