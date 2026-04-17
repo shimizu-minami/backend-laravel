@@ -12,11 +12,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 1. 依存関係のインストール（デプロイ用）
-      - name: Install dependencies
-        run: |
-          /usr/local/php/8.3/bin/php composer.phar install --no-dev --optimize-autoloader
-
       # 2. ファイルの転送 (rsyncを使用)
       - name: Deploy to Server
         uses: appleboy/scp-action@v0.1.7
@@ -38,4 +33,14 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             cd /home/users/0/main.jp-shimizu-minami/web/tools/backend
+            
+            # 念のため、現在地にある composer.phar を使って実行
+            # パスが見つからない場合は 8.2 に下げて試すのも手です
+            /usr/local/php/8.3/bin/php composer.phar install --no-dev --optimize-autoloader
+            
+            # artisan も同じ PHP で実行
             /usr/local/php/8.3/bin/php artisan migrate --force
+            
+            # キャッシュのクリアもしておくと安心です
+            /usr/local/php/8.3/bin/php artisan config:cache
+            /usr/local/php/8.3/bin/php artisan route:cache
