@@ -15,7 +15,7 @@ jobs:
       # 1. 依存関係のインストール（デプロイ用）
       - name: Install dependencies
         run: |
-          composer install --no-dev --optimize-autoloader
+          /usr/local/php/8.3/bin/php composer.phar install --no-dev --optimize-autoloader
 
       # 2. ファイルの転送 (rsyncを使用)
       - name: Deploy to Server
@@ -38,4 +38,4 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             cd /home/users/0/main.jp-shimizu-minami/web/tools/backend
-            php artisan migrate --force
+            /usr/local/php/8.3/bin/php artisan migrate --force
