@@ -1,9 +1,16 @@
+# 1. フォルダアクセス時に index.php を開くよう強制
+DirectoryIndex index.php
+
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
         Options -MultiViews -Indexes
     </IfModule>
 
     RewriteEngine On
+
+    # 2. サブディレクトリでの運用に合わせてベースパスを指定
+    # tools/backend/public で動かしている場合はここを調整
+    RewriteBase /tools/backend/public/
 
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
