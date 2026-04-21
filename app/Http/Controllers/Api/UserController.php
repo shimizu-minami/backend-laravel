@@ -52,4 +52,13 @@ class UserController extends Controller
 		// 3. 更新後のデータをリソースとして返却
 		return new UserResource($user);
 	}
+	public function destroy(User $user)
+	{
+		// 削除実行
+		$user->delete();
+
+		// 204 No Content (成功したが返すデータはない) 
+		// または 200 OK でメッセージを返す
+		return response()->json(['message' => 'User deleted successfully'], 200);
+	}
 }
