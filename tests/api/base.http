@@ -1,0 +1,16 @@
+https://shimizu-minami.main.jp/tools/backend/public/api/
+http://localhost:8080/api/
+
+Header 
+ Accept: application/json
+
+GET(INDEX)
+  https://shimizu-minami.main.jp/tools/backend/public/api/***
+  http://localhost:8080/api/***
+
+  Header 
+   Accept: application/json
+
+GET(個別)
+  https://shimizu-minami.main.jp/tools/backend/public/api/***/1
+  http://localhost:8080/api/***/1

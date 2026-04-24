@@ -10,7 +10,7 @@ DirectoryIndex index.php
 
     # 2. サブディレクトリでの運用に合わせてベースパスを指定
     # tools/backend/public で動かしている場合はここを調整
-    RewriteBase /tools/backend/public/
+    RewriteBase /
 
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .

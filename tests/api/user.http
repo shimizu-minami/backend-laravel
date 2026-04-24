@@ -1,0 +1,5 @@
+https://shimizu-minami.main.jp/tools/backend/public/api/users
+http://localhost:8080/index.php/api/users
+
+Header 
+ Accept: application/json
